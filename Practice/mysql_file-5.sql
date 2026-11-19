@@ -162,4 +162,28 @@ select emp_id, first_name,
 	   coalesce(nullif(phone, '0'), 'Not Provided') as PHONE
 from employees_raw;
 
+-- Create a clean view of employees_raw
+CREATE VIEW employees_clean AS
+SELECT
+emp_id,
+UPPER(TRIM(first_name)) AS first_name,
+UPPER(TRIM(COALESCE(last_name, 'UNKNOWN'))) AS last_name,
+CONCAT_WS(' ',
+UPPER(TRIM(first_name)),
+UPPER(TRIM(last_name)))
+AS full_name,
+LOWER(TRIM(COALESCE(email, 'no-email@unknown.com')))
+AS email,
+COALESCE(NULLIF(TRIM(phone), '0'), 'Not Provided') AS phone,
+UPPER(COALESCE(department, 'UNASSIGNED')) AS department,
+CASE
+WHEN salary IS NULL OR salary <= 0 THEN NULL
+ELSE salary
+END AS salary,
+hire_date,
+UPPER(COALESCE(city, 'UNKNOWN')) AS city,
+UPPER(COALESCE(is_active, 'UNKNOWN')) AS is_active
+FROM employees_raw;
 
+select * from employees_raw;
+select * from employees_clean;
