@@ -70,6 +70,15 @@ VALUES
 
 select * from orders;
 
+-- AUTO_INCREMENT in action
+-- You INSERT without specifying customer_id:
+insert into customers (customer_name, email, phone, city, created_at)
+values ('Ananya Roy', 'ananya@email.com', '9812345678', 'Kolkata', '2024-01-05');
+-- The database automatically assigns customer_id = 6
+-- (the next integer after the existing maximum of 5)
+
+SELECT customer_id, customer_name FROM customers WHERE customer_name = 'Ananya Roy';
+
 select customers.customer_name, orders.product_name, orders.quantity
 from customers
 left join orders
@@ -102,5 +111,3 @@ select
 from customers c
 inner join orders o
 on c.customer_id = o.customer_id;
-
-
