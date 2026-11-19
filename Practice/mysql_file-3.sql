@@ -100,3 +100,30 @@ from customers c
 right join orders o 
 on c.customer_id = o.customer_id;
 
+-- SQL Full Join
+-- Syntax
+
+-- FULL JOIN: all customers and all orders
+-- Standard SQL (works in PostgreSQL, SQL Server):
+-- MySQL equivalent using UNION:
+
+select 
+	c.customer_name,
+    o.order_id,
+    o.product_name,
+    o.total_amount
+from customers c 
+left join orders o 
+on c.customer_id = o.customer_id
+union
+select
+	c.customer_name,
+    o.order_id,
+    o.product_name,
+    o.total_amount
+from customers c 
+right join orders o 
+on c.customer_id = o.customer_id;
+
+-- SQL Self Join
+select * from employees;
